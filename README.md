@@ -42,7 +42,7 @@ Note: the "data" key holding the payload can either be 'resource' || 'resources'
 
 ## Sample Image in use
 
-![Alt text](src/assets/datatable.jpg?raw=true "ng-pure-datatable")
+![Alt text](src/assets/sample.jpg?raw=true "ng-pure-datatable")
    
 ## Usage in Application
 
