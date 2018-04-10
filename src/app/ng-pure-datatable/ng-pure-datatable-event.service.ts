@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 
 @Injectable()
-export class EventsService {
+export class NgPureDataTableEventService {
 
   listeners: any;
   eventsSubject: any;

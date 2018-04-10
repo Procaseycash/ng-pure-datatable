@@ -1,0 +1,44 @@
+input {
+  width: 80% !important;
+  border: 0 !important;
+  height: 20px !important;
+  padding: 5px !important;
+}
+
+input:visited, input:active, input:link, input:after, input:hover, input:focus, button:focus {
+  border: 0 !important;
+  outline: none;
+}
+
+.ng-search {
+  border-radius: 5px !important;
+  -moz-border-radius: 5px !important;
+  -webkit-border-radius: 5px !important;
+  width: 100% !important;
+  color: #000;
+  border: 1px solid #ccc;
+  border-bottom: 3px solid #eee000;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 11px !important;
+}
+
+.disabled {
+  background: rgb(235, 235, 228) !important;
+}
+
+.button {
+  background: #83e6bc;
+  padding: 9px !important;
+  color: #fff !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  font-size: 11px;
+  float: right;
+  border-radius: 0 5px 5px 0  !important;
+  -moz-border-radius: 0 5px 5px 0 !important;
+  -webkit-border-radius: 0 5px 5px 0 !important;
+}
+.clearOut {
+  clear: both;
+}

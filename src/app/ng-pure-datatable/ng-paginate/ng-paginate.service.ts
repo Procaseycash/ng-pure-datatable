@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class PaginatorService {
+export class NgPaginateService {
 
   constructor(private http: HttpClient) {}
 

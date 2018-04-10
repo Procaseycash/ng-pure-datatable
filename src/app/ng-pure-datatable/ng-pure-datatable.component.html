@@ -1,0 +1,12 @@
+<div *ngIf="paginateSettings.data">
+
+    <div [ngStyle]="style">
+      <ng-search [allSettings]="searchSettings"></ng-search>
+      <div style="clear: both;"></div>
+    </div>
+
+  <ng-paginate [from]="paginateSettings.from" [data]="paginateSettings.data"
+               [path]="paginateSettings.path"
+               [limit]="paginateSettings.limit" [perNav]="paginateSettings.perNav"
+               [viewPage]="paginateSettings.viewPage" [paginate]="paginateSettings.paginate"></ng-paginate>
+</div>

@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import {LarangPaginatorModule} from './paginator/larang.paginator.module';
 import {HttpClientModule} from "@angular/common/http";
+import {NgPureDatatableModule} from "./ng-pure-datatable/ng-pure-datatable.module";
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     HttpClientModule,
-    LarangPaginatorModule.forRoot()
+    NgPureDatatableModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
