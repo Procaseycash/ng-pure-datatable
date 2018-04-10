@@ -68,7 +68,7 @@ export class NgPureDatatableComponent implements OnInit {
     }
     this.top = (this.top && this.top > 50) ? this.top - 50 : this.top;
     this.style['top'] = this.top + 'px';
-    console.log('element=', element.getBoundingClientRect().top);
+   // console.log('element=', element.getBoundingClientRect().top);
   }
 }
 
