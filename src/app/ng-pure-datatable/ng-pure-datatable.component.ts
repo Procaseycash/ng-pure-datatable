@@ -9,7 +9,7 @@ import {NgSearchTypesEnum} from "./ng-search/ng-search-types.enum";
 })
 export class NgPureDatatableComponent implements OnInit {
   @Input() key = '';
-  @Input() tableId = '';
+  @Input() id = '';
   @Input() paginateSettings: paginateSettings = {
     data: {},
     path: '',
@@ -35,7 +35,7 @@ export class NgPureDatatableComponent implements OnInit {
   };
 
   public top = 0;
-  public style = {position: 'absolute', width: '40%', 'margin-bottom': '100px'};
+  public style = {position: 'absolute', 'margin-bottom': '100px'};
 
   constructor(private renderer: Renderer2, private elRef: ElementRef) {
   }
@@ -47,13 +47,15 @@ export class NgPureDatatableComponent implements OnInit {
     this.searchSettings['from'] = this.key;
     this.searchSettings['position'] = (this.searchSettings['position']) ? this.searchSettings['position'] : 'right';
     this.searchSettings['width'] = (this.searchSettings['width']) ? this.searchSettings['width'] : 40;
+
+    console.log('width', this.searchSettings['width'], this.searchSettings['position']);
     this.configSearchDisplay();
   }
 
 
   configSearchDisplay(): void {
-    this.tableId = (this.tableId.indexOf('#') > -1) ? this.tableId : '#' + this.tableId;
-    const element = document.querySelector(this.tableId);
+    this.id = (this.id.indexOf('#') > -1) ? this.id : '#' + this.id;
+    const element = document.querySelector(this.id);
     this.top = element.getBoundingClientRect().top;
     if (this.top < 50) {
       this.style['margin-top'] = '20px';
@@ -70,7 +72,7 @@ export class NgPureDatatableComponent implements OnInit {
   }
 }
 
-interface paginateSettings {
+export interface paginateSettings {
   data: Object;
   path: string;
   limit: number;

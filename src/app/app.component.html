@@ -25,13 +25,6 @@
         <td>#</td>
         <td>Name</td>
         <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
-        <td>Email</td>
       </tr>
 
       <tr *ngFor="let page of paginator.data['data']; let i = index;">
@@ -43,7 +36,7 @@
     </table>
   </div>
 
-  <ng-pure-datatable [tableId]="'#userTable'" [key]="key" [searchSettings]="searchSettings"
+  <ng-pure-datatable [id]="'#userTable'" [key]="key" [searchSettings]="searchSettings"
                      [paginateSettings]="paginator"></ng-pure-datatable>
 
 </div>

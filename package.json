@@ -1,6 +1,6 @@
 {
-  "name": "larang-paginator",
-  "version": "5.0.8",
+  "name": "ng-pure-datatable",
+  "version": "5.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -53,19 +53,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Procaseycash/larang-paginator.git"
+    "url": "git+https://github.com/Procaseycash/ng-pure-datatable.git"
   },
   "keywords": [
-    "Laravel",
+    "Datatable",
+    "Table",
+    "No Jquery",
+    "Fully Typescript",
     "Angular",
-    "Paginator"
+    "Pagination",
+    "Search"
   ],
   "author": "Kazeem Olanipekun <kezyolanipekun@gmail.com>",
   "contributors": [
     "Kazeem Olanipekun <kezyolanipekun@gmail.com>"
   ],
   "bugs": {
-    "url": "https://github.com/Procaseycash/larang-paginator/issues"
+    "url": "https://github.com/Procaseycash/ng-pure-datatable/issues"
   },
-  "homepage": "https://github.com/Procaseycash/larang-paginator#README"
+  "homepage": "https://github.com/Procaseycash/ng-pure-datatable#README"
 }

@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
     searchKeys: ['name', 'email'], // can be empty array to enable deep searching
     borderColor: '',
     buttonColor: '',
+    width: 10,
+    position: 'right',
     queryField: 'search',
     data: null,
     placeholder: 'Filter information...'
