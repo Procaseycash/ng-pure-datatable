@@ -96,6 +96,7 @@ export class NgSearchComponent implements OnInit {
    * @param query
    */
   doSearch(query) {
+    this.copyData = JSON.parse(JSON.stringify(this.allSettings.data));
     if (!query) {
       return null;
     }
