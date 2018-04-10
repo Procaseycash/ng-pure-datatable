@@ -40,6 +40,9 @@ Note: the "data" key holding the payload can either be 'resource' || 'resources'
  
  `npm install --save ng-pure-datatable`
 
+## Sample Image in use
+
+![Alt text](src/assets/datatable.jpg?raw=true "ng-pure-datatable")
    
 ## Usage in Application
 
