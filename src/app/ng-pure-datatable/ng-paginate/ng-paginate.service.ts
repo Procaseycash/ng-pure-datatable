@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Http} from "@angular/http";
 
 @Injectable()
-export class PaginatorService {
+export class NgPaginateService {
 
   constructor(private http: Http) {}
 
@@ -12,7 +12,7 @@ export class PaginatorService {
    * @returns {Observable<any>}
    */
   listByPaginator(url): Observable<any> {
-    return this.http.get(url);
+    return this.http.get(url).map((res) => res.json());
   }
 
 }

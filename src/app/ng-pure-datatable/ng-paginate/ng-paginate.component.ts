@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {EventsService} from './event.service';
-import {PaginatorService} from './paginator.service';
-import 'rxjs/add/operator/map';
+import {NgPaginateService} from "./ng-paginate.service";
+import {NgPureDataTableEventService} from "../ng-pure-datatable-event.service";
+
 @Component({
-  selector: 'app-paginator',
-  templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.css']
+  selector: 'ng-paginate',
+  templateUrl: './ng-paginate.component.html',
+  styleUrls: ['./ng-paginate.component.css']
 })
-export class PaginatorComponent implements OnInit, AfterViewInit {
+export class NgPaginateComponent implements OnInit, AfterViewInit {
   @Input() data: Object;
   @Input() path = '';
   @Input() limit = 50;
@@ -22,9 +22,9 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   public pages: Array<number> = [];
 
 
-  constructor(private paginatorService: PaginatorService,
-              private eventsService: EventsService) {
-    this.eventsService.on('getUrlPath', (path) => {
+  constructor(private ngPaginateService: NgPaginateService,
+              private ngPureDataTableEventService: NgPureDataTableEventService) {
+    this.ngPureDataTableEventService.on('getUrlPath', (path) => {
       this.path = path;
     });
   }
@@ -64,21 +64,22 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
       url = this.path + '&' + queryPath;
     }
     this.showLoad = (typeof (page) === 'string') ? parseInt((page.substr(page.indexOf('=') + 1)), 10) : page;
-   // console.log('showLoad= ', this.showLoad, page);
-    this.paginatorService.listByPaginator(url).map(res => res.json()).subscribe(
+    // console.log('showLoad= ', this.showLoad, page);
+    this.ngPaginateService.listByPaginator(url).subscribe(
       (res: Res) => {
-          if (this.showLoad > this.pages.length) {
-            this.getPaging();
-          }
-          this.data = (res['last_page']) ? res : res.data || res.content || res.contents || res.resource || res.resources || res.list || res.items;
-
-        // console.log('data=', this.data);
-          this.nextPrevPage();
-          this.eventsService.broadcast(this.from, res);
-          this.showLoad = 0;
-        // console.log('data=>', res);
+        if (this.showLoad > this.pages.length) {
+          this.getPaging();
+        }
+        this.data = (res['last_page']) ? res : res.data || res.content || res.contents || res.resource || res.resources || res.list || res.items;
+        this.nextPrevPage();
+        res['type'] = 'paging';
+        this.ngPureDataTableEventService.broadcast(this.from, res);
+        this.showLoad = 0;
+        // console.log('data=>', data);
       },
       err => {
+        err['type'] = 'paging';
+        this.ngPureDataTableEventService.broadcast(this.from, err);
         this.showLoad = 0;
       }
     );
@@ -106,22 +107,22 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-   // console.log('this.data=', this.data);
+    // console.log('this.data=', this.data);
     this.nextPrevPage();
     this.getPages();
   }
 
   ngAfterViewInit() {
-   // console.log('this.data=', this.data);
+    // console.log('this.data=', this.data);
   }
 
 }
 
 interface DataRes {
   data: Array<Object>;
+
   [propName: string]: any;
 }
-
 
 interface Res {
   data: DataRes;
