@@ -90,8 +90,8 @@ Add `NgPureDatatableModule.forRoot()` in AppModule or Other Modules using `NgPur
   ````
   key: The unique key per table to enable event broadcasting
   id: The table unique id generated to allow search injection 
-  diabledSearch: This is used to disable the search option by passing true (default is false)
-  diabledPaging:  This is used to disable the pagination option by passing true  (default is false)
+  disableSearch: This is used to disable the search option by passing true (default is false)
+  disablePaging:  This is used to disable the pagination option by passing true  (default is false)
   ````  
   
    ## *.component.ts
