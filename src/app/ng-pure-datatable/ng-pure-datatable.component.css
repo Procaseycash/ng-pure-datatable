@@ -1,1 +1,23 @@
+select {
+  width: 100% !important;
+  height: 30px !important;
+  padding: 5px !important;
+  color: #000 !important;
+  border: 1px solid #ccc;
+  border-bottom: 3px solid #eee000;
+}
 
+
+select:visited, select:active, select:link, select:after, select:hover, select:focus, button:focus {
+  outline: none;
+}
+
+
+@media (max-width: 768px) {
+  .search-app {
+    width: 55% !important;
+  }
+  .limit-style {
+    width: 100px !important;
+  }
+}

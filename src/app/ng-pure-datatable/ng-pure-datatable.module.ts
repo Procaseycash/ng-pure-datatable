@@ -7,10 +7,13 @@ import {NgSearchComponent} from "./ng-search/ng-search.component";
 import {NgSearchService} from "./ng-search/ng-search.service";
 import {NgPaginateService} from "./ng-paginate/ng-paginate.service";
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   declarations: [NgPureDatatableComponent, NgPaginateComponent, NgSearchComponent],

@@ -20,12 +20,22 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
   public showLoad = 0;
   public totalPages = [];
   public pages: Array<number> = [];
-
+  public total = 0;
+  public perNavCopy = {
+    nav: 5
+  };
 
   constructor(private ngPaginateService: NgPaginateService,
               private ngPureDataTableEventService: NgPureDataTableEventService) {
     this.ngPureDataTableEventService.on('getUrlPath', (path) => {
       this.path = path;
+    });
+    this.ngPureDataTableEventService.on('resetLimitCalled', (limit) => {
+      setTimeout(() => {
+        const buildPage = this.viewPage + '=' + 1;
+        this.limit = limit;
+        this.loadData(( buildPage + '&' + this.paginate + '=' + this.limit), buildPage);
+      }, 200);
     });
   }
 
@@ -37,6 +47,9 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
     for (let i = 1; i <= this.data['last_page']; i++) {
       this.totalPages.push(i);
     }
+    const perNav = JSON.parse(JSON.stringify(this.perNavCopy));
+    this.perNav = perNav.nav;
+    // console.log('thperVa=', this.perNav);
     this.getPaging();
     // console.log('pages=', this.totalPages, this.data['last_page'], this.data['current_page']);
   }
@@ -56,6 +69,7 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
    * @param page
    */
   loadData(queryPath, page?: any) {
+    // console.log('queryPath=', queryPath, page);
     const posQ = this.path.indexOf('?');
     let url = '';
     if (posQ === -1) {
@@ -75,7 +89,9 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
         res['type'] = 'paging';
         this.ngPureDataTableEventService.broadcast(this.from, res);
         this.showLoad = 0;
+        this.total = this.data['total'] || this.limit;
         // console.log('data=>', data);
+        this.processPerNav();
       },
       err => {
         err['type'] = 'paging';
@@ -83,6 +99,27 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
         this.showLoad = 0;
       }
     );
+  }
+
+  /**
+   * This is used to adjust content per nav display based on limit selected
+   */
+  private processPerNav() {
+    const page = Math.ceil(this.data['total'] / this.limit);
+    // console.log('page==>', page, 'perNav=', this.perNav );
+    if (this.perNav > page) {
+      setTimeout(() => {
+        this.totalPages = this.totalPages.slice(0, page);
+        this.pages = this.totalPages.slice(0, page);
+      }, 200);
+    } else {
+      setTimeout(() => {
+        this.totalPages = [];
+        this.pages = [];
+        this.getPages();
+        // console.log('this.totalPages', this.totalPages.toString());
+      }, 200);
+    }
   }
 
   /**
@@ -110,6 +147,8 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
     // console.log('this.data=', this.data);
     this.nextPrevPage();
     this.getPages();
+    this.perNavCopy = JSON.parse(JSON.stringify({nav: this.perNav}));
+    this.total = this.data['total'] || this.limit;
   }
 
   ngAfterViewInit() {

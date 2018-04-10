@@ -1,6 +1,7 @@
-import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgSearchInterface} from "./ng-search/ng-search.interface";
 import {NgSearchTypesEnum} from "./ng-search/ng-search-types.enum";
+import {NgPureDataTableEventService} from "./ng-pure-datatable-event.service";
 
 @Component({
   selector: 'ng-pure-datatable',
@@ -10,6 +11,8 @@ import {NgSearchTypesEnum} from "./ng-search/ng-search-types.enum";
 export class NgPureDatatableComponent implements OnInit {
   @Input() key = '';
   @Input() id = '';
+  @Input() disableSearch = false;
+  @Input() disablePaging = false;
   @Input() paginateSettings: paginateSettings = {
     data: {},
     path: '',
@@ -36,8 +39,9 @@ export class NgPureDatatableComponent implements OnInit {
 
   public top = 0;
   public style = {position: 'absolute', 'margin-bottom': '100px'};
-
-  constructor() {
+  public limitStyle;
+  public ranges = [];
+  constructor(private ngPureDataTableEventService: NgPureDataTableEventService) {
   }
 
   ngOnInit() {
@@ -48,26 +52,79 @@ export class NgPureDatatableComponent implements OnInit {
     this.searchSettings['position'] = (this.searchSettings['position']) ? this.searchSettings['position'] : 'right';
     this.searchSettings['width'] = (this.searchSettings['width']) ? this.searchSettings['width'] : 40;
     this.style['width'] =  this.searchSettings['width'] + '%';
+    this.limitStyle = JSON.parse(JSON.stringify(this.style));
+    this.limitStyle['width'] =  '200px';
     // console.log('width', this.searchSettings['width'], this.searchSettings['position']);
     this.configSearchDisplay();
+    this.processLimit();
+  }
+
+  /**
+   * This is used to generate limit range.
+   */
+  processLimit() {
+    const div = Math.floor(+this.paginateSettings.limit / 2);
+    this.ranges = [];
+    let range = 0;
+    // console.log('div=', div);
+    if ((div % 2) === 0) {
+      range = 10;
+    } else {
+      range = 15;
+    }
+    const ranges = (range === 10) ? 101 : 106;
+    for (let i = range; i < ranges; i+= range) {
+      if (i > this.paginateSettings.data['total']) {
+        break;
+      }
+      this.ranges.push(i);
+    }
   }
 
 
+  /**
+   * This is used to update limit
+   * @param limit
+   */
+  updateLimit(limit) {
+    this.paginateSettings.limit = +limit;
+    // console.log('this.paginateSettings.limit', this.paginateSettings.limit);
+    this.ngPureDataTableEventService.broadcast('resetLimitCalled', this.paginateSettings.limit);
+  }
+
+
+  /**
+   * This is used to set the border color for the div
+   * @returns {{border-bottom: string}}
+   */
+  public setBorderColor() {
+    this.searchSettings.borderColor = (this.searchSettings.borderColor) ? this.searchSettings.borderColor : '#eee000';
+    return {'border-bottom': '3px solid ' + this.searchSettings.borderColor};
+  }
+
+
+  /**
+   * This is used to configure search and limit position
+   */
   configSearchDisplay(): void {
     this.id = (this.id.indexOf('#') > -1) ? this.id : '#' + this.id;
     const element = document.querySelector(this.id);
     this.top = element.getBoundingClientRect().top;
     if (this.top < 50) {
       this.style['margin-top'] = '20px';
+      this.limitStyle['margin-top'] = this.style['margin-top'];
       element['style'].marginTop = '80px';
     }
-    if (this.searchSettings['position'] === 'right') {
+    if (this.searchSettings['position'].toLowerCase() === 'right') {
       this.style['right'] = '10px';
+      this.limitStyle['left'] = '10px';
     } else {
       this.style['left'] = '10px';
+      this.limitStyle['right'] = '10px';
     }
     this.top = (this.top && this.top > 50) ? this.top - 50 : this.top;
     this.style['top'] = this.top + 'px';
+    this.limitStyle['top'] = this.style['top'];
    // console.log('element=', element.getBoundingClientRect().top);
   }
 }

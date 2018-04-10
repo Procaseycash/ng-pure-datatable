@@ -1,4 +1,23 @@
-
+.showing {
+  color: #000 !important;
+  font-size: 0.95em;
+  line-height: 10px;
+  left: 10px;
+  top: 15px;
+  position: absolute;
+}
+@media (max-width: 768px) {
+.showing {
+  position: relative;
+  margin: 10px;
+  text-align: center;
+}
+  .justify-content-end {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+    padding-top: 20px;
+  }
+}
 .pagination {
   display: -ms-flexbox;
   display: flex;
@@ -81,6 +100,16 @@
 .pagination-sm .page-item:last-child .page-link {
   border-top-right-radius: 0.2rem;
   border-bottom-right-radius: 0.2rem;
+}
+
+.justify-content-end {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.justify-content-start {
+  -ms-flex-pack: start !important;
+  justify-content: flex-start !important;
 }
 
 .justify-content-center {
