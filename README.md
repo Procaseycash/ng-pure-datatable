@@ -26,9 +26,6 @@ Note: the "data" key holding the payload can either be 'resource' || 'resources'
                   }
               ]
           }
-   
-
-  This library should be placed below the table using it, that is the standard way to use it.   
     
   ## Release Note
   
@@ -104,7 +101,7 @@ Add `NgPureDatatableModule.forRoot()` in AppModule or Other Modules using `NgPur
   
 ````
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Http} from "@angular/http";
 import {NgSearchTypesEnum, NgPureDataTableEventService} from "ng-pure-datatable";
 
 @Component({
@@ -138,7 +135,7 @@ export class AppComponent implements OnInit {
   };
 
 
-  constructor(private ngPureDataTableEventService: NgPureDataTableEventService, private http: HttpClient) {
+  constructor(private ngPureDataTableEventService: NgPureDataTableEventService, private http: HttpCl) {
 
     this.ngPureDataTableEventService.on(this.key, (res) => {
       if (res['type'] && res['type'] === 'search') {
@@ -163,7 +160,7 @@ export class AppComponent implements OnInit {
   }
 
   private getTransactions() {
-    this.http.get(this.paginator.path + `?page=1&paginate=${this.paginator.limit}`).subscribe(
+    this.http.get(this.paginator.path + `?page=1&paginate=${this.paginator.limit}`).map(res => res.json()).subscribe(
       (res) => {
         this.paginator.data = res['data'];
         this.searchSettings.data = res['data']['data'];
