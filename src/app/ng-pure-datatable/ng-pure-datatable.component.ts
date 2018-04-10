@@ -37,7 +37,7 @@ export class NgPureDatatableComponent implements OnInit {
   public top = 0;
   public style = {position: 'absolute', 'margin-bottom': '100px'};
 
-  constructor(private renderer: Renderer2, private elRef: ElementRef) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -47,8 +47,8 @@ export class NgPureDatatableComponent implements OnInit {
     this.searchSettings['from'] = this.key;
     this.searchSettings['position'] = (this.searchSettings['position']) ? this.searchSettings['position'] : 'right';
     this.searchSettings['width'] = (this.searchSettings['width']) ? this.searchSettings['width'] : 40;
-
-    console.log('width', this.searchSettings['width'], this.searchSettings['position']);
+    this.style['width'] =  this.searchSettings['width'] + '%';
+    // console.log('width', this.searchSettings['width'], this.searchSettings['position']);
     this.configSearchDisplay();
   }
 
