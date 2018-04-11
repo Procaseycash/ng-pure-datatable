@@ -8,7 +8,7 @@ Note: the "data" key holding the payload can either be 'resource' || 'resources'
    
       
     data: {
-             "total": 50,
+             "total": 50, // total count of all paginated data
              "per_page": 15,
              "current_page": 1,
              "last_page": 4,
