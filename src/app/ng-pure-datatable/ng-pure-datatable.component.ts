@@ -21,6 +21,7 @@ export class NgPureDatatableComponent implements OnInit {
     perNav: 5,
     viewPage: 'page',
     paginate: 'paginate',
+    textColor: '#000'
   };
 
   @Input() searchSettings: NgSearchInterface<Object> = {
@@ -29,6 +30,10 @@ export class NgPureDatatableComponent implements OnInit {
     data: [],
     searchKeys: [],
     position: 'right',
+    positionStyle: {
+      right: null,
+      top: null,
+    },
     width: 40,
     from: null,
     queryField: 'search',
@@ -50,7 +55,9 @@ export class NgPureDatatableComponent implements OnInit {
     this.paginateSettings['from'] = this.key;
     this.searchSettings['from'] = this.key;
     this.searchSettings['position'] = (this.searchSettings['position']) ? this.searchSettings['position'] : 'right';
+    this.searchSettings['positionStyle'] = (this.searchSettings['positionStyle']) ? this.searchSettings['positionStyle'] : null;
     this.searchSettings['width'] = (this.searchSettings['width']) ? this.searchSettings['width'] : 40;
+    this.paginateSettings['textColor'] = (this.paginateSettings['textColor']) ? this.paginateSettings['textColor'] : '#000';
     this.style['width'] =  this.searchSettings['width'] + '%';
     this.limitStyle = JSON.parse(JSON.stringify(this.style));
     this.limitStyle['width'] =  '200px';
@@ -115,14 +122,17 @@ export class NgPureDatatableComponent implements OnInit {
       this.limitStyle['margin-top'] = this.style['margin-top'];
       element['style'].marginTop = '80px';
     }
+    const right = (this.searchSettings['positionStyle'] && (this.searchSettings['positionStyle']['right'] <= -1 || this.searchSettings['positionStyle']['right'] >= 0)) ? this.searchSettings['positionStyle']['right']: '10px';
+    const top = (this.searchSettings['positionStyle'] && (this.searchSettings['positionStyle']['top'] >= 0 || this.searchSettings['positionStyle']['top'] <= -1 )) ? this.searchSettings['positionStyle']['top']: null;
+
     if (this.searchSettings['position'].toLowerCase() === 'right') {
-      this.style['right'] = '10px';
-      this.limitStyle['left'] = '10px';
+      this.style['right'] = right + 'px';
+      this.limitStyle['left'] =  this.style['right'];
     } else {
-      this.style['left'] = '10px';
-      this.limitStyle['right'] = '10px';
+      this.style['left'] = right + 'px';
+      this.limitStyle['right'] =  this.style['left'];
     }
-    this.top = (this.top && this.top > 50) ? this.top - 50 : this.top;
+    this.top = (top) ? top : (this.top && this.top > 50) ? this.top - 50 : this.top;
     this.style['top'] = this.top + 'px';
     this.limitStyle['top'] = this.style['top'];
    // console.log('element=', element.getBoundingClientRect().top);
@@ -137,4 +147,5 @@ export interface paginateSettings {
   perNav: number;
   viewPage: string;
   paginate: string;
+  textColor: string;
 }

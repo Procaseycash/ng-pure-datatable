@@ -31,6 +31,10 @@ export class NgSearchComponent implements OnInit {
     from: null,
     position: 'right',
     width: 40,
+    positionStyle: {
+      right: null,
+      top: null
+    },
     queryField: 'search',
     borderColor: '#eee000',
     buttonColor: '#83e6bc',
@@ -44,6 +48,10 @@ export class NgSearchComponent implements OnInit {
     searchKeys: [],
     from: null,
     position: 'right',
+    positionStyle: {
+      right: null,
+      top: null
+    },
     width: 40,
     queryField: 'search',
     borderColor: '#eee000',

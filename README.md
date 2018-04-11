@@ -60,6 +60,7 @@ Add `NgPureDatatableModule.forRoot()` in AppModule or Other Modules using `NgPur
   perNav: (optional) navigation bar to show at a time: defualt is 5.
   viewPage:(optional)  string value to hold the Integer value for the next page. default is 'page'
   paginate: (optional) string value to hold the Integer value for limit in a view page. defualt is 'paginate'.
+  textColor: (optional) this color will be applied to text for page information.
   
    
   Note that the query string in (next_page_url & prev_page_url) must be thesame to what is passed down in viewPage & paginate for paginator to work with.
@@ -82,7 +83,8 @@ Add `NgPureDatatableModule.forRoot()` in AppModule or Other Modules using `NgPur
    borderColor: (optional) The border-bottom color of the table seacher.
    queryField: The field name to pass search value into. such as search will be search='value entered'
    width: (optional) The width of the search,
-   position: (optional) The position of the search,
+   position: (optional) The position of the search (accept 'right' or 'left'),
+   positionStyle: (optional) The position style is an object of top and right integer value only (eg {top: 35, right: 20}) but if position is set to left, the style right will be applied on the left position
    ````
    
    #### Notice for table mapping key and Id to communicate with your defined table
@@ -103,6 +105,7 @@ Add `NgPureDatatableModule.forRoot()` in AppModule or Other Modules using `NgPur
 import {Component, OnInit} from '@angular/core';
 import {Http} from "@angular/http";
 import {NgSearchTypesEnum, NgPureDataTableEventService} from "ng-pure-datatable";
+
 
 @Component({
   selector: 'app-root',
@@ -127,15 +130,19 @@ export class AppComponent implements OnInit {
     searchKeys: ['name', 'email'], // can be empty array to enable deep searching
     borderColor: '',
     buttonColor: '',
-    width: 10,
+    width: 50,
     position: 'right',
+    positionStyle: {
+      right: 0,
+      top: -50
+    },
     queryField: 'search',
     data: null,
     placeholder: 'Filter information...'
   };
 
 
-  constructor(private ngPureDataTableEventService: NgPureDataTableEventService, private http: HttpCl) {
+  constructor(private ngPureDataTableEventService: NgPureDataTableEventService, private http: HttpClient) {
 
     this.ngPureDataTableEventService.on(this.key, (res) => {
       if (res['type'] && res['type'] === 'search') {
@@ -160,7 +167,7 @@ export class AppComponent implements OnInit {
   }
 
   private getTransactions() {
-    this.http.get(this.paginator.path + `?page=1&paginate=${this.paginator.limit}`).map(res => res.json()).subscribe(
+    this.http.get(this.paginator.path + `?page=1&paginate=${this.paginator.limit}`).subscribe(
       (res) => {
         this.paginator.data = res['data'];
         this.searchSettings.data = res['data']['data'];
@@ -182,7 +189,15 @@ export class AppComponent implements OnInit {
   Add this below the table you want it to paginate data from backend.
   
   ````
-<div class="col-sm-12" *ngIf="paginator.data">
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center;">
+  <h1>
+    Welcome to {{ title }}! 
+  </h1>
+  <img width="300" alt="Angular Logo"
+       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+<div class="col-sm-12 content" *ngIf="paginator.data">
   <div style="display: block">
     <table id="userTable" width="100%" class="table table-striped table-responsive">
       <tr>
@@ -200,10 +215,23 @@ export class AppComponent implements OnInit {
     </table>
   </div>
 
-  <ng-pure-datatable [id]="'#userTable'" [key]="key" [searchSettings]="searchSettings"
+  <ng-pure-datatable [id]="'userTable'" [key]="key" [searchSettings]="searchSettings"
                      [paginateSettings]="paginator"></ng-pure-datatable>
 
 </div>
+
+
+````
+
+## .component.css
+
+````
+.content {
+  margin: 30px;
+  position: relative;
+  background: #fff;
+  color: #000;
+}
 
 ````
 

@@ -10,6 +10,12 @@ export interface NgSearchInterface<T> {
   buttonColor: string;
   queryField: string;
   position: string;
+  positionStyle: PositionStyle,
   width: number;
   searchType: NgSearchTypesEnum;
+}
+
+export interface PositionStyle {
+  right: number;
+  top: number;
 }

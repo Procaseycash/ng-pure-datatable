@@ -1,5 +1,5 @@
 <nav aria-label="..." style="position: relative" *ngIf="pages.length !== 0">
-  <div class="showing">
+  <div class="showing" [ngStyle]="{'text-color': textColor}">
     Showing {{((data['current_page'] - 1) * (limit <= total ? limit : total) + 1)}} - {{(data['current_page']) * (limit <= total ? limit : total)}} of {{total}} entries
   </div>
   <ul *ngIf="limit <= data['total']" class="pagination  justify-content-end">

@@ -15,6 +15,7 @@ export class NgPaginateComponent implements OnInit, AfterViewInit {
   @Input() perNav = 5;
   @Input() viewPage: string = 'page';
   @Input() paginate: string = 'paginate';
+  @Input() textColor: string = '#000';
   public next_page = '';
   public prev_page = '';
   public showLoad = 0;

@@ -28,6 +28,10 @@ export class AppComponent implements OnInit {
     buttonColor: '',
     width: 50,
     position: 'right',
+    positionStyle: {
+      right: 0,
+      top: -50
+    },
     queryField: 'search',
     data: null,
     placeholder: 'Filter information...'

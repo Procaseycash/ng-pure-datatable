@@ -1,19 +1,21 @@
 <div *ngIf="paginateSettings.data">
 
-    <div class="limit-style" *ngIf="limitStyle && !disablePaging" [ngStyle]="limitStyle">
-      <!--<label for="limit">Limit: </label>-->
-      <select id="limit" [ngStyle]="setBorderColor()" [(ngModel)]="paginateSettings.limit"  (change)="updateLimit(+limit.value)" #limit>
-        <option value="" disabled selected>Select Limit</option>
-        <option *ngFor="let num of ranges" value="{{num}}">{{num}}</option>
-      </select>
-    </div>
-    <div class="search-app" *ngIf="!disableSearch" [ngStyle]="style">
-      <ng-search [allSettings]="searchSettings"></ng-search>
-      <div style="clear: both;"></div>
-    </div>
+  <div class="limit-style" *ngIf="limitStyle && !disablePaging" [ngStyle]="limitStyle">
+    <!--<label for="limit">Limit: </label>-->
+    <select id="limit" [ngStyle]="setBorderColor()" [(ngModel)]="paginateSettings.limit"
+            (change)="updateLimit(+limit.value)" #limit>
+      <option value="" disabled selected>Select Limit</option>
+      <option *ngFor="let num of ranges" value="{{num}}">{{num}}</option>
+    </select>
+  </div>
+  <div class="search-app" *ngIf="!disableSearch" [ngStyle]="style">
+    <ng-search [allSettings]="searchSettings"></ng-search>
+    <div style="clear: both;"></div>
+  </div>
 
   <ng-paginate *ngIf="!disablePaging" [from]="paginateSettings.from" [data]="paginateSettings.data"
                [path]="paginateSettings.path"
                [limit]="paginateSettings.limit" [perNav]="paginateSettings.perNav"
-               [viewPage]="paginateSettings.viewPage" [paginate]="paginateSettings.paginate"></ng-paginate>
+               [viewPage]="paginateSettings.viewPage" [paginate]="paginateSettings.paginate"
+               [textColor]="paginateSettings.textColor"></ng-paginate>
 </div>
